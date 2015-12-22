@@ -227,6 +227,33 @@ items = new ArrayList<>();
     	assertEquals(2.0,groupByLevel.get(102.0).size(),0);
     	
     }
+    @Test
     
+    public void useGroupingsbyCounting() {
+    	
+    	//Map<Double, Long>groupsbycounting = fruits.stream().collect(Fruit::getLevel, Collectors.counting());
+    	Map<Double, Long> groupByLevel = fruits.stream().collect(
+				Collectors.groupingBy(Fruit::getLevel,
+						Collectors.counting()));
+    	assertEquals(2.0, groupByLevel.get(102.0), 0);
+    }
+    @Test 
+    public void findElementLessThan3() {
+    	long element = Stream.of(1,2,3,4,5).filter(p-> p.intValue()<4).count();
+    	assertEquals(3,element);
+    }
+    @Test 
+    public void applymaptostream() {
+    	List<String> strings = Stream.of("one", null, "three").map(s -> {
+			if (s == null)
+				return "[unknown]";
+			else
+				return s;
+		}).collect(Collectors.toList());
+    	
+    }
+    
+
+	
     
 }
