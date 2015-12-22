@@ -32,12 +32,17 @@ public class Java8StreamTest {
 			.getLogger(Java8StreamTest.class);
     class Fruit {
     	String name;
+    	private double level;
     	
-    	public Fruit(String name){
+    	public Fruit(String name,double level){
     		this.name=name;
+    		this.level=level;
     	}
     	public String getName(){
     		return name;
+    	}
+    	public double  getLevel(){
+    		return level;
     	}
     }
     class Item {
@@ -61,9 +66,9 @@ items = new ArrayList<>();
 		items.add(new Item("ONE"));
 		items.add(new Item("TWO"));
 		items.add(new Item("THREE"));
-		 fruits = Arrays.asList(new Fruit("apple"),
-                new Fruit("grape"),
-                new Fruit("orange"));
+		 fruits = Arrays.asList(new Fruit("apple",102),
+                new Fruit("grape",102),
+                new Fruit("orange",103));
     }
 
     @Test
@@ -211,6 +216,16 @@ items = new ArrayList<>();
     	 assertEquals("orange" , fruit.getName());
     	 Optional<Fruit> found1 = find("loe", fruits);	
     	 assertEquals(found1,Optional.empty());
+    }
+    @Test
+    
+    public void useGroupingslevels() {
+    	Map<Double, List<Fruit>> groupByLevel = fruits.stream()
+				.collect(Collectors.groupingBy(Fruit::getLevel));
+
+    	//Map<Double,Long>levels = fruits.stream().collect(Collectors.groupingBy(Fruit::getLevel));
+    	assertEquals(2.0,groupByLevel.get(102.0).size(),0);
+    	
     }
     
     
