@@ -1,0 +1,38 @@
+Lambda expressions are one of the important features included in java 8.
+ Lambda Expressions are used to write concise code for that interface which
+  consist one method i.e. functional interface. Lambda Expression is also use
+  d to iterate collection in simple way. For a single method interface whatever
+   we achieve by using anonymous class or inner class, the same can be achieved
+    using lambda expression in a very concise code in java 8. Lambda expression 
+    defines the functional interface method and returns the instance of that interface.
+    Lambda Expression Syntax is very easy to read and understand. Lambda Expression Syntax will look like 
+    (Argument  part)  -> Body part 
+    ample 2 : If method takes two arguments and do some business logic and returns the value. 
+(int a, int b) ->  a+b;
+The value of a+b will be returned by the method. 
+
+Sample 3: If method takes one argument and do some business logic 
+  (String s) ->  s + "Hello World"; 
+  
+  java.util.Optional class has been introduced in java 8, that will avoid NullPointerException in our code.
+   We can write our code more readable and in fewer lines because now we will not apply if else 
+   condition for NullPointerException. Optional class will check for null value and if null value is present then it will 
+  return empty Optional instance. Before Java 8 we avoid NullPointerException as below. 
+  Optional.of()
+of() method creates and returns the Optional instance for the given class. We can apply other method of Optional class.
+Optional.map()
+map() method runs the given method in the argument if the instance is not null otherwise it returns empty Optional instance. The argument which is a function cannot have Optional mapper.
+Optional.orElse()
+It returns the value in the Optional instance for the mapping method otherwise it returns the value provided in orElse() argument. 
+
+Optional.flatMap()
+flatMap () method is same as map() method but the difference is that the method argument which is a function must have Optional mapper. 
+Find some more classes. We have a Country class. 
+
+Optional.filter()
+filter() method takes Predicate instance as an argument. The value in Optional instance is
+ filtered and if filtered value is not empty then value is returned otherwise empty Optional instance is returned. 
+ 
+ Optional.ifPresent()
+ifPresent() method takes Consumer instance as an argument and if value is present then it 
+run the given consumer passed as an argument otherwise do nothing. 

@@ -27,12 +27,15 @@ import static com.google.common.truth.Truth.assertThat;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-//import java.util.Map;
+import java.util.function.Predicate;
 //import java.util.stream.Collectors;
 //import java.util.stream.Stream;
-
+import java.util.function.Consumer;
 import org.paumard.model.McDonald;
 import org.paumard.model.Student;
+import org.paumard.model.PrimeMinister;
+import org.paumard.model.Person;
+import org.paumard.model.Country;
 public class Java8StreamTest {
 	
 	List<Item> items;
@@ -314,7 +317,11 @@ items = new ArrayList<>();
               .get() ;
       System.out.println("The city has the most MacDonald : " + entry) ;
   }
-
+ /* We have a list of Student class. Grouping is done on the basis of student class name.
+  List is converted into stream of student object. 
+  Then call collect method of stream. groupingBy of Collectors class checks each element of stream 
+  and gets class name and then group it as list. Finally we get a map where key is the
+  one by which grouping is done. Find the complete example. */
 	@Test
 	
 public void modelgroupingby(){
@@ -336,6 +343,50 @@ public void modelgroupingby(){
         
         stdByAge.forEach((k,v)->System.out.println("Key:"+k+"  "+ 
                 ((List<Student>)v).stream().map(m->m.getName()).collect(Collectors.joining(","))));
+	}
+	@Test
+	public void optiontest() {
+		Optional<PrimeMinister> pm = Optional.of(new PrimeMinister());
+        String pmName = pm.map(PrimeMinister::getName).orElse("None");
+        System.out.println(pmName);
+        //Assign Some Value to PrimeMinister.name
+        pm = Optional.of(new PrimeMinister("Narendra Modi"));
+        pmName = pm.map(PrimeMinister::getName).orElse("None");
+        System.out.println(pmName);
+	}
+	
+	@Test
+	
+	public void flatmapDemo() {
+		Optional<PrimeMinister> primeMinister = Optional.of(new PrimeMinister("Narendra Modi"));
+        Optional<Country> country = Optional.of(new Country(primeMinister));
+        Optional<Person> person = Optional.of(new Person(country));
+        String pmName= person.flatMap(Person::getCountry).flatMap(Country::getPrimeMinister)
+                .map(PrimeMinister::getName).orElse("None");
+        System.out.println(pmName);
+	}
+	@Test
+	
+	public void OptionalFilterTest() {
+		Optional<PrimeMinister> pm = Optional.of(new PrimeMinister("Narendra Modi"));
+        //Using Optional.isPresent
+        System.out.println(pm.isPresent());
+        
+	}
+	@Test
+	public void Predicatetest(){
+		Optional<PrimeMinister> pm = Optional.of(new PrimeMinister("Narendra Modi"));
+        //Using Optional.filter
+        Predicate<PrimeMinister> pmPredicate = (p)-> p.getName().length() > 15;
+        System.out.println(pm.filter(pmPredicate));
+		
+	}
+	@Test
+	public void Predicatetest2(){
+		Optional<PrimeMinister> pm = Optional.of(new PrimeMinister("Narendra Modi"));
+        //Using Optional.ifPresent
+        Consumer<PrimeMinister> pmConsumer = (PrimeMinister p) -> System.out.println(p.getName());
+        pm.ifPresent(pmConsumer);
 	}
     
 }
