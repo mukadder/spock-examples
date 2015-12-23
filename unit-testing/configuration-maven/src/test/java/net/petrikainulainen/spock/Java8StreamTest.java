@@ -36,6 +36,8 @@ import org.paumard.model.Student;
 import org.paumard.model.PrimeMinister;
 import org.paumard.model.Person;
 import org.paumard.model.Country;
+import java.util.function.Function;
+import org.paumard.model.Student1;
 public class Java8StreamTest {
 	
 	List<Item> items;
@@ -388,5 +390,25 @@ public void modelgroupingby(){
         Consumer<PrimeMinister> pmConsumer = (PrimeMinister p) -> System.out.println(p.getName());
         pm.ifPresent(pmConsumer);
 	}
+	//In the example we have created two Predicate and then creating a student object, we are passing it to test method of Predicate. 
+	@Test
+	public void studenttest() {
+		Predicate<Student1> maleStudent = s-> s.age >= 20 && "male".equals(s.gender);
+	      Predicate<Student1> femaleStudent = s-> s.age > 15 && "female".equals(s.gender);
+	      
+	      Function<Student1,String> maleStyle = s-> "Hi, You are male and age "+s.age;
+	      
+	      Function<Student1,String> femaleStyle = s-> "Hi, You are female and age "+ s.age;
+	      
+	      Student1 s1 = new Student1(21,"male");
+	      if(maleStudent.test(s1)){
+	          System.out.println(s1.customShow(maleStyle));
+	      }else if(femaleStudent.test(s1)){
+	          System.out.println(s1.customShow(femaleStyle));
+	      }      
+	  }    
+		
+		
+	
     
 }

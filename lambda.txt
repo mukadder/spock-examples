@@ -36,3 +36,12 @@ filter() method takes Predicate instance as an argument. The value in Optional i
  Optional.ifPresent()
 ifPresent() method takes Consumer instance as an argument and if value is present then it 
 run the given consumer passed as an argument otherwise do nothing. 
+j
+ava.util.function.Predicate is a functional interface introduced in java 8. Predicate is used for assigning a lambda expression.
+ The functional interface is test(T t) which returns Boolean value. When we pass the object to this method, 
+it evaluates the object over assigned lambda expression. Find the two expressions below.
+
+Predicate<Student> maleStudent = s-> s.age >= 20 && "male".equals(s.gender);
+Predicate<Student> femaleStudent = s-> s.age > 15 && "female".equals(s.gender);
+First expression creates the scenario for a male student and second expression creates the scenario for female student.
+ Find the complete example. 
