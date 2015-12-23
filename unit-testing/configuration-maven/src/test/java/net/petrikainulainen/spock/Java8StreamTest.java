@@ -287,7 +287,31 @@ items = new ArrayList<>();
           }
           return mdo ;
       }).collect(Collectors.toList()) ;
+      
 	  assertEquals(13912,mcdos.size());
+	  System.out.println("# of McDos = " + mcdos.size()) ;
+	  // The number of cities that have a McDonald
+      long nTowns = 
+      mcdos.stream()
+              .map(McDonald::city)
+              .collect(Collectors.toSet())
+              .size() ;
+      assertEquals(4927,nTowns);
+      System.out.println("The number of cities that have a McDonald : " + nTowns) ;
+      // The city has the most MacDonald
+      Map.Entry<String, Long> entry = 
+      mcdos.stream()
+              .collect(
+                      Collectors.groupingBy(
+                              McDonald::city, 
+                              Collectors.counting()
+                      )
+              )
+              .entrySet()
+              .stream()
+              .max(Map.Entry.comparingByValue())
+              .get() ;
+      System.out.println("The city has the most MacDonald : " + entry) ;
   }
 
 	
