@@ -45,3 +45,68 @@ Predicate<Student> maleStudent = s-> s.age >= 20 && "male".equals(s.gender);
 Predicate<Student> femaleStudent = s-> s.age > 15 && "female".equals(s.gender);
 First expression creates the scenario for a male student and second expression creates the scenario for female student.
  Find the complete example. 
+ java 8 has introduced the concept of functional interface. Functional interface is nothing but a
+  simple java interface containing only one method. In the old style functional interface can 
+  be used with inner class or anonymous class to implement. But in java 8, we have lambda 
+  expressions to use functional interface. The difference is that lambda expression is clean and small code in comparison to inner
+  or anonymous class. java.util.function.Function is a functional interface introduced in java 8.
+  How to declare Functional Interface in Java 8 | Use @FunctionalInterface
+Functional interface will have one method and can have any number of arguments. The interface will be annotated with @FunctionalInterface. By this annotation we ensure that the functional interface will not have more than one method. If we try to add more than one method, then there will be compile time error as Unexpected @FunctionalInterface annotation.
+Find the functional interface with no argument.
+@FunctionalInterface
+public interface Display {
+    public String show();    
+ }  
+ ackage com.concretepage.function;
+@FunctionalInterface
+public interface Multiply {
+    public int multiply(int num);    
+}package com.concretepage.function;
+@FunctionalInterface
+public interface Add {
+    public int addData(int n1, int n2);    
+}  
+/ functional interface with no argument
+         Display display = () -> "Functional interface with no argument";
+         String s= display.show();
+         System.out.println(s);
+        // functional interface with one argument
+        Multiply multiply = (int num) -> num*10;
+        int res= multiply.multiply(5);
+        System.out.println(res);
+        // functional interface with two argument
+        Add add =(int a, int b) -> a+b;
+        int rs = add.addData(15, 20);
+        System.out.println(rs);
+        
+        
+        Java 8 Stream: filter and map Example
+        
+        these methods are intermediate operations. Filter filters a stream on the basis of a given
+         predicate and returns stream object. And again we can apply other stream methods to this instance.
+          Map is stream function that applies a
+         given function to all its elements and returns the changed stream. Find the method syntax.
+        Stream<T> filter(Predicate<? super T> predicate) 
+        We pass predicate as an argument on the basis of which filter method filters the stream and returns the changed stream object.
+        <R> Stream<R> map(Function<? super T,? extends R> mapper) 
+        
+        Stream.filter
+Stream.filter filters the calling stream on the basis of given predicate. In the example we have an employee list and created a predicate . 
+This predicate will be passed to filter as an argument. Finally we will print the filtered stream. 
+
+usage 
+
+public class FilterDemo {
+    public static void main(String[] args) {
+        List<Employee> list = Employee.getEmpList();
+        Predicate<Employee> filterPredicate = e -> e.id > 1 && e.sal < 6000;
+        Consumer<Employee> printConsumer = e -> System.out.println(e.id + ", "+e.sal);
+        list.stream().filter(filterPredicate).forEach(printConsumer);
+    }
+} 
+Stream.map
+Stream.map transforms one stream into another stream on the basis of given function. 
+In the example we have an employee stream and then we converted into player stream using map. 
+ List<Employee> list = Employee.getEmpList();
+        Stream<Player> players = list.stream().map(e -> new Player(e.id, e.name));
+        players.forEach(p -> System.out.println(p.id+ ", "+p.name));
