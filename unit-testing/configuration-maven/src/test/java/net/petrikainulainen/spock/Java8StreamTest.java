@@ -1,15 +1,23 @@
 package net.petrikainulainen.spock;
 import java.util.OptionalDouble;
+
 import org.junit.Before;
+
 import java.util.Comparator;
+import java.util.Calendar;
+
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Map;
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;
@@ -18,14 +26,23 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 import java.util.List;
+
 import static java.util.stream.Collectors.toList;
+
 import java.util.stream.Collectors;
+
 import org.junit.Test;
+
 import java.util.Set;
+
 import static java.util.stream.Collectors.toSet;
+
 import java.util.stream.DoubleStream;
+
 import org.apache.log4j.Logger;
+
 import static com.google.common.truth.Truth.assertThat;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -33,12 +50,15 @@ import java.util.function.Predicate;
 //import java.util.stream.Collectors;
 //import java.util.stream.Stream;
 import java.util.function.Consumer;
+
 import org.paumard.model.McDonald;
 import org.paumard.model.Student;
 import org.paumard.model.PrimeMinister;
 import org.paumard.model.Person;
 import org.paumard.model.Country;
+
 import java.util.function.Function;
+
 import org.paumard.model.Student1;
 public class Java8StreamTest {
 	
@@ -426,7 +446,8 @@ public void modelgroupingby(){
         //System.out.println("intSummaryStatistics = " + intSummaryStatistics);
 		//sum it, flavour 1 There's an extra level of boxing going on in as the reduction function is a BinaryOperator<Integer> - it gets passed two Integer values, unboxes them, adds them, and then re-boxes the result
 	    int sum1 = list.stream().reduce(0, (acc, e) -> acc + e).intValue();
-
+//integers.values().stream().mapToInt(Integer::intValue).sum();
+	 //   integers.values().stream().collect(summingInt(Integer::intValue)));
 	    //sum it, flavour 2 he mapToInt version unboxes the Integer elements from the list once and then works with primitive int values from that point on as an IntStream.
 	    int sum2 = list.stream().mapToInt(e -> e).sum();
 	    List<Integer> primes = Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29);
@@ -439,6 +460,24 @@ public void modelgroupingby(){
 	    System.out.println(sum1 + "ffffffffffffffffffff " + sum2);
 		
 	}
-	
+	@Test
+	public void find_max_value_from_list_of_integers_java8() {
+		List<Integer> CENTERS_ROOKIE_YEAR = Arrays.asList(
+		        1946, 1988, 1970, 1931, 1940, 1920, 1980, 1953, 1960, 1974, 1987
+		    );
+		 Calendar calendar = Calendar.getInstance();
+	        int currentYear = calendar.get(Calendar.YEAR);
+	    OptionalInt maxElement = CENTERS_ROOKIE_YEAR.stream().filter(rate -> rate<currentYear).mapToInt(p -> p)
+	            .max();
+
+	    assertEquals(1988, maxElement.getAsInt());
+
+	    // or
+
+	    Optional<Integer> maxElement2 = CENTERS_ROOKIE_YEAR.stream().reduce(
+	            Integer::max);
+
+	    assertEquals(new Integer(1988), maxElement2.get());
+	}
     
 }
