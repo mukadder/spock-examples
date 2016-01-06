@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Map;
 import java.util.Arrays;
+import java.util.IntSummaryStatistics;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -428,7 +429,13 @@ public void modelgroupingby(){
 
 	    //sum it, flavour 2 he mapToInt version unboxes the Integer elements from the list once and then works with primitive int values from that point on as an IntStream.
 	    int sum2 = list.stream().mapToInt(e -> e).sum();
+	    List<Integer> primes = Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29);
+	    //IntSummaryStatistics. It is this object which provides us utility method like getMin(), getMax(), getSum() or getAverage()
 
+//Read more: http://java67.blogspot.com/2014/04/java-8-stream-api-examples-filter-map.html#ixzz3wUz9eEcM
+	    IntSummaryStatistics stats = primes.stream().mapToInt((x) -> x).summaryStatistics();
+	    		 System.out.println(stats + "ffffffffffffffffffff " + stats);
+	    		//Read more: http://java67.blogspot.com/2014/04/java-8-stream-api-examples-filter-map.html#ixzz3wUxwLMWV
 	    System.out.println(sum1 + "ffffffffffffffffffff " + sum2);
 		
 	}
