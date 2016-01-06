@@ -2,12 +2,13 @@ package net.petrikainulainen.spock;
 import java.util.OptionalDouble;
 
 import org.junit.Before;
-
+import static java.util.stream.Collectors.*;
 import java.util.Comparator;
 import java.util.Calendar;
-
+import java.util.AbstractMap;
 import org.junit.Test;
-
+import static java.util.Arrays.asList;
+import static java.util.Map.Entry;
 import static org.junit.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -97,6 +98,31 @@ public class Java8StreamTest {
 			return key;
 		}
 	}
+    static class Artist {
+        private final String name;
+
+        Artist(String name) {
+            this.name = name;
+        }
+
+        public String toString() {return name;}
+
+    }
+    private static <T,U> AbstractMap.SimpleEntry<T,U> pair(T t, U u) {
+        return new AbstractMap.SimpleEntry<T,U>(t,u);
+    }
+    static class Album {
+        private List<Artist> artist;
+
+        Album(List<Artist> artist) {
+            this.artist = artist;
+        }
+
+        List<Artist> getArtist() {
+            return artist;
+        }
+
+    }
     @Before
     public void createHelloObject() {
         hello = new Hello();
@@ -510,6 +536,25 @@ public void modelgroupingby(){
 			    // Get the optional (optional because the map can be empty)
 			    .get();
 		System.out.println("Max is0000000000000000000 " + max);
+	}
+	
+	@Test 
+	public void testinggroupingbyOneToMany() {
+		  List<Album> albums = Arrays.asList(
+	                new Album(
+	                        asList(
+	                                new Artist("bob"),
+	                                new Artist("tom")
+	                        )
+	                ),
+	                new Album(asList(new Artist("bill")))
+	        );
+//I think you are after Collectors.mapping which can be passed as a second argument to groupingBy
+	        Map<Artist, List<Album>> x = albums.stream()
+	                .flatMap(album -> album.getArtist().stream().map(artist -> pair(artist, album)))
+	                .collect(groupingBy(Entry::getKey, mapping(Entry::getValue, toList())));
+
+	        x.entrySet().stream().forEach(System.out::println);
 	}
     
 }
