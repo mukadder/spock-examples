@@ -1,6 +1,7 @@
 package net.petrikainulainen.spock;
 import java.util.OptionalDouble;
 import org.junit.Before;
+import java.util.Comparator;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
@@ -408,7 +409,29 @@ public void modelgroupingby(){
 	      }      
 	  }    
 		
+	@Test
+	public void comparingComparotorTest() {
+		String[] stringsArray = "The quick brown fox has a dirty ladder".split("\\s+");
+		System.out.println(
+                Arrays.stream(stringsArray)
+              .sorted(Comparator.<String,String>comparing(String::toLowerCase).reversed())
+                .collect(Collectors.toList())
+        );
+    }
+	@Test
+	public void TestingSummingoperationsonList() {
+		List<Integer> list = Arrays.asList(1,2,3,4,5,6,7);
+		//final IntSummaryStatistics intSummaryStatistics = list.stream().mapToInt(Integer::intValue).summaryStatistics();
+        //System.out.println("intSummaryStatistics = " + intSummaryStatistics);
+		//sum it, flavour 1 There's an extra level of boxing going on in as the reduction function is a BinaryOperator<Integer> - it gets passed two Integer values, unboxes them, adds them, and then re-boxes the result
+	    int sum1 = list.stream().reduce(0, (acc, e) -> acc + e).intValue();
+
+	    //sum it, flavour 2 he mapToInt version unboxes the Integer elements from the list once and then works with primitive int values from that point on as an IntStream.
+	    int sum2 = list.stream().mapToInt(e -> e).sum();
+
+	    System.out.println(sum1 + "ffffffffffffffffffff " + sum2);
 		
+	}
 	
     
 }
