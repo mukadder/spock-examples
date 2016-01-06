@@ -12,7 +12,9 @@ import static org.junit.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
+import java.time.LocalDate;
+import java.util.TreeMap;
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -478,6 +480,36 @@ public void modelgroupingby(){
 	            Integer::max);
 
 	    assertEquals(new Integer(1988), maxElement2.get());
+	}
+	@Test
+	public void generatingmapsortingbykeyorvalue(){
+		final Map<LocalDate, Integer> foobar = new TreeMap<>();
+		 
+		// Fill a date -> int map with 12 random ints between 0 and 100, 
+		new Random(System.currentTimeMillis()).ints(0,100).limit(12).forEach(value -> 
+			foobar.put(
+				LocalDate.now().withMonth(foobar.size() + 1), 
+				value
+			));
+		// print them for verbosity
+		foobar.entrySet().forEach(System.out::println);
+		// get the maximum
+		Map.Entry<LocalDate, Integer> max 
+			= foobar
+			    // from all entries
+			    .entrySet()
+			    // stream them
+			    .stream()
+			    // max, obviously
+			    .max(
+				    // this one is cool. It generates
+				    // Map.Entry comparators by delegating to another
+				    // comparator, exists also for keys
+				    Map.Entry.comparingByValue(Integer::compareTo)
+			    )
+			    // Get the optional (optional because the map can be empty)
+			    .get();
+		System.out.println("Max is0000000000000000000 " + max);
 	}
     
 }
