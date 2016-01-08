@@ -631,5 +631,19 @@ List removeMissing(List l1, List l2) {
 	            .collect(Collectors.toList());
 	    assertEquals(asList(2, 3, 4, 5), together);
 	}
+	
+	/*I have two maps m1 and m2 of type Map<Integer, String>, which has to be merged into 
+	 * a single map Map<Integer, List<String>>, where values 
+	 * of same keys in both the maps are collected into a List and put into a new Map.
+	 * Map<Integer, List<String>> collated = 
+    Stream.concat(m1.entrySet().stream(), m2.entrySet().stream())
+          .collect(Collectors.groupingBy(Map.Entry::getKey,
+                                         Collectors.mapping(Map.Entry::getValue,
+                                                            Collectors.toList())));
+	 */
+	
+	
+	
+	
     
 }
