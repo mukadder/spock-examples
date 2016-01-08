@@ -556,5 +556,32 @@ public void modelgroupingby(){
 
 	        x.entrySet().stream().forEach(System.out::println);
 	}
+
+	@Test
+    public void functionalTest() {
+
+        //Start with a list of words containing nulls, empty strings, and random words.
+        List<String> words = Arrays.asList("aardvark", null, "aluminum", "bail", "", "a", "zero");
+
+        //Filter out null and empty strings, map all words to start with an upper case letter, and
+        //collect the results back into a list.
+        List<String> results = words.stream()
+                .filter(s -> s != null && !s.equals(""))
+                .map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1))
+                .collect(Collectors.toList());
+
+        //Reduce the result list to count the number of words starting with 'A'. Note that
+        //the combiner (third parameter) is not used unless we're doing this in parallel,
+        //which we're not as we didn't use stream().parallel() here.  I understood this due
+        //to a response from my SO question here:   http://stackoverflow.com/a/30016171/857994.
+        Long countOfAWords = results.stream().reduce(
+                0L,
+                (a, b) -> b.charAt(0) == 'A' ? a + 1 : a,
+                Long::sum);
+
+        //Assert the result list and count match our expected values.
+        assertEquals("[Aardvark, Aluminum, Bail, A, Zero]", results.toString());
+        assertEquals(Long.valueOf(3), countOfAWords);
+    }
     
 }
