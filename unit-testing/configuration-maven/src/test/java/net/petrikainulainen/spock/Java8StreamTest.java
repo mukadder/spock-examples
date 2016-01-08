@@ -694,7 +694,7 @@ public void findthestringwithlargestlowercaselettersfromlist() {
                 long lowerCount2 = o2.chars().filter(Character::isLowerCase).count();
                 return Long.compare(lowerCount1, lowerCount2);
             }).get();
-	System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+	System.out.println("&&&&&&&&&&&&&&&&&ddd&&&&&&&&&&&&&&&&&&");
 	String maxOfLowercase2 = strList.stream()
 	        .max(Comparator.comparingLong(o -> o.chars().filter(Character::isLowerCase).count()))
 	        .get();
