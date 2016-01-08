@@ -583,5 +583,53 @@ public void modelgroupingby(){
         assertEquals("[Aardvark, Aluminum, Bail, A, Zero]", results.toString());
         assertEquals(Long.valueOf(3), countOfAWords);
     }
+	@Test
+	public void convertStringToUpperCaseStreams() {
+		/* filter collection based off other collection streamed 
+		 * filePaths.stream()
+  .filter(p -> acceptedIds.contains(p.getParent().getFileName().toString()))
+  .collect(Collectors.toList());
+  
+  filePaths.stream()
+         .filter(p -> acceptedIds.stream().anyMatch(id -> p.toString().contains(id)))
+         .collect(toList());
+         final Set<String> acceptedIds = ...
+// Matches the number of the file, concluded with the underscore
+final Pattern extractor = Pattern.compile("\.*(?<number>\d+)_")
+filePaths.stream().filter( path -> {
+    final Matcher m = extractor
+        .matcher(path.getFileName().toString());
+    m.find();
+    return acceptedIds.contains(m.group("number"));
+})
+List removeMissing(List l1, List l2) {
+    List ret = l1.stream()
+        .filter(o -> l2.contains(o)) //Keep if object o satisfies the condition "l2 contains a reference to this object"
+        .collect(Collectors.toList());
+    return ret;
+}
+		 */
+		
+		
+	    List<String> collected = Stream.of("a", "b", "hello") // Stream of String 
+	            .map(string -> string.toUpperCase()) // Returns a stream consisting of the results of applying the given function to the elements of this stream.
+	            .collect(Collectors.toList());
+	    assertEquals(asList("A", "B", "HELLO"), collected);
+	}   
+	@Test
+	public void testflatMap() throws Exception {
+		/*
+		 * In the second example, a Stream of List is passed. It is NOT a Stream of Integer!
+		 *  If a tranformation Function has to be used (through map), then first the Stream has to be
+		 *   flattened to something else (a Stream of Integer). If flatMap is removed then the following error is returned: 
+		 *   The operator + is 
+		 * undefined for the argument type(s) List, int. It is NOT possible to apply + 1 on a List of Integers
+		 */
+	    List<Integer> together = Stream.of(asList(1, 2), asList(3, 4)) // Stream of List<Integer>
+	            .flatMap(numbers -> numbers.stream())
+	            .map(integer -> integer + 1)
+	            .collect(Collectors.toList());
+	    assertEquals(asList(2, 3, 4, 5), together);
+	}
     
 }
