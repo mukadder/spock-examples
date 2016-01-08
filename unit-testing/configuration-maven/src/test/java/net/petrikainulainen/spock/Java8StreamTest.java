@@ -681,8 +681,26 @@ public void findMax(){
 	 */
 	Optional<String> max = Stream.of(array).max(comparingInt(String::length).thenComparing(naturalOrder()));
 	int maxInt = Integer.parseInt(max.get());
-	System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+	//System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 	System.out.println(maxInt);
+}
+
+@Test
+public void findthestringwithlargestlowercaselettersfromlist() {
+	List<String> strList = asList("getElementById", "htmlSpecialChars", "httpRequest");
+	String maxOfLowercase = strList.stream()
+            .max((o1, o2) -> {
+                long lowerCount1 = o1.chars().filter(Character::isLowerCase).count();
+                long lowerCount2 = o2.chars().filter(Character::isLowerCase).count();
+                return Long.compare(lowerCount1, lowerCount2);
+            }).get();
+	System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+	String maxOfLowercase2 = strList.stream()
+	        .max(Comparator.comparingLong(o -> o.chars().filter(Character::isLowerCase).count()))
+	        .get();
+	System.out.println(maxOfLowercase2);
+	
+	
 }
 
 	
