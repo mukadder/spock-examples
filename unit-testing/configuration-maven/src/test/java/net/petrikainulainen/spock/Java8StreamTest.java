@@ -29,9 +29,9 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 import java.util.List;
-
+import java.util.Collections;
 import static java.util.stream.Collectors.toList;
-
+import static java.util.Comparator.*;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
@@ -642,8 +642,49 @@ List removeMissing(List l1, List l2) {
                                                             Collectors.toList())));
 	 */
 	
+@Test 
+
+public void ListToMap() {
+	/*
+	 *  have a List<Item> collection. 
+	 *  I need to convert it into Map<Integer, Item> The key of the map must be the index of the item in the collection
+	 *  Map<Integer,Item> map = list.stream().collect(Collectors.toMap(i -> list.indexOf(i), i -> i));
+	 */
+	List<Item> list = new ArrayList<>();
+	list.add(new Item("Apple"));
+	list.add(new Item("Bat"));
+	Map<Integer,Item> map = list.stream().collect(Collectors.toMap(i -> list.indexOf(i), i -> i));
 	
+	//You can create a Stream of the indices using an IntStream and then convert them to a Map
+	/*
+	 * Map<Integer,Item> map = 
+    IntStream.range(0,items.size())
+             .boxed()
+             .collect(Collectors.toMap (i -> i, i -> items.get(i)));
+	 */
+	System.out.println(map.entrySet());
 	
+}
+@Test 
+public void findMax(){
+	String[] array = new String[] {"1", "2", "3", "25"};
+	// this method returns the max value in array 
+	Arrays.stream(array).mapToInt(Integer::parseInt).max().orElse(0);
+	
+	// this method returns the maximum index 
+	//System.out.println(Integer.valueOf(Collections.max(Arrays.asList(array)))); //.max returns 0 when empty array
+	System.out.println(Arrays.stream(array).mapToInt(Integer::parseInt).max().orElse(0));
+	/*
+	 * Supposed that integers presented as Strings are all non-negative 
+	 * and don't have trailing zeros, you don't need to parse them during the search.
+	 *  Use a custom comparator, which first compares strings by length, then by value:
+	 */
+	Optional<String> max = Stream.of(array).max(comparingInt(String::length).thenComparing(naturalOrder()));
+	int maxInt = Integer.parseInt(max.get());
+	System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+	System.out.println(maxInt);
+}
+
 	
     
 }
