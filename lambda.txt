@@ -32,6 +32,9 @@ Optional.flatMap()
 flatMap () method is same as map() method but the difference is that the method argument which is a function must have Optional mapper. 
 Find some more classes. We have a Country class. 
 
+
+
+
 Optional.filter()
 filter() method takes Predicate instance as an argument. The value in Optional instance is
  filtered and if filtered value is not empty then value is returned otherwise empty Optional instance is returned. 
